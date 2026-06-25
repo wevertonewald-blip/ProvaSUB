@@ -26,7 +26,7 @@ def karr(T, paran):
   '''
   Nesse passo calcula-se a constante de arrhneius para a temperatura T em que o sistema se encontra
   '''
-  k=paran.Kr*np.exp(-paran.Ea/paran.R)*((1/T)-(1/paran.Tr))
+  k=paran.Kr*np.exp((-paran.Ea/paran.R)*((1/T)-(1/paran.Tr)))
   return k
 
 def model(t, alpha, T, paran):
@@ -36,11 +36,11 @@ def model(t, alpha, T, paran):
   dalpha=karr(T, paran)*alpha**(paran.m)*(1-alpha)**(paran.n)
   return dalpha
 
-def simu(duration, T_simulation, paran_obj):
+def simu(temp, T, paran):
   '''
   Usa-se tal função  pra obter os resultados em que se quer simular.
   '''
-  sol=solve_ivp(model, [0, duration], [paran_obj.alpha0],
-                args=(T_simulation, paran_obj),
-                t_eval=np.linspace(0, duration, 1000), method='RK45')
+  sol=solve_ivp(model, [0, temp], [paran.alpha0],
+                args=(T, paran),
+                t_eval=np.linspace(0, temp, 1000), method='RK45')
   return sol.t, sol.y[0]
