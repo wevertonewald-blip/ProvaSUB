@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+import numpy as np
+from scipy.integrate import solve_ivp
+
 @dataclass
 class paran:
   '''
